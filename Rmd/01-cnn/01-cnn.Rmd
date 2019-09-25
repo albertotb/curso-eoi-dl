@@ -1,8 +1,8 @@
 ---
 title: "Redes convolucionales"
-subtitle: "Programa ejecutivo de Inteligencia Artificial"
-author: "Alberto Torres"
-date: "`r Sys.Date()`"
+subtitle: "Programa ejecutivo de Inteligencia Artificial        "
+author: "Alberto Torres Barrán</br>alberto.torres@icmat.es"
+date: "Año de realización: 2019-2020"
 output:
   xaringan::moon_reader:
     css: ["default", "custom.css"]
@@ -260,7 +260,7 @@ $$S(i, j) = (K * I)(i,\, j) = \sum_m \sum_n I(i+m,\, j+n) K(m,\, n)$$
 
 ---
 
-# Motivación
+## Motivación
 
 1. conexiones dispersas
 
