@@ -1,4 +1,4 @@
-# Curso EOI deep learning
+# Curso EOI Deep Learning
 
 ## Índice
 
