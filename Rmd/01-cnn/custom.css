@@ -25,7 +25,8 @@
   text-shadow: none;
   color: #7db61c;
   position: relative;
-  left: 110px;
+  left: 220px;
+  text-align: left;
 }
 
 /* subtitle */
@@ -67,8 +68,6 @@
   display: none;
 }
 
-
-/* color of slide titles */
 h2 {
   color: #7db61c;
 }

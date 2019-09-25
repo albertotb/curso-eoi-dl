@@ -1,8 +1,8 @@
 ---
 title: "Redes recurrentes"
 subtitle: "Programa ejecutivo de Inteligencia Artificial"
-author: "Alberto Torres"
-date: "`r Sys.Date()`"
+author: "Alberto Torres Barrán</br>alberto.torres@icmat.es"
+date: "Año de realización: 2019-2020"
 output:
   xaringan::moon_reader:
     css: ["default", "custom.css"]

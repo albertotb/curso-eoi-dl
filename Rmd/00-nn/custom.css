@@ -25,7 +25,8 @@
   text-shadow: none;
   color: #7db61c;
   position: relative;
-  left: 110px;
+  left: 220px;
+  text-align: left;
 }
 
 /* subtitle */
@@ -36,10 +37,6 @@
   margin-left: 225px;
   font-size: 130%;
   text-align: left;
-}
-
-.title-slide h1 span {
-  background-color: #d9d9d9;
 }
 
 /* author */
@@ -69,6 +66,10 @@
 /* hide slide number */
 .title-slide .remark-slide-number {
   display: none;
+}
+
+h2 {
+  color: #7db61c;
 }
 
 code { /* changes inline code highlighting */

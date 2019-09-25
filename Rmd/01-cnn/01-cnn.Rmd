@@ -1,6 +1,6 @@
 ---
 title: "Redes convolucionales"
-subtitle: "Programa ejecutivo de Inteligencia Artificial        "
+subtitle: "Programa ejecutivo de Inteligencia Artificial"
 author: "Alberto Torres Barrán</br>alberto.torres@icmat.es"
 date: "Año de realización: 2019-2020"
 output:

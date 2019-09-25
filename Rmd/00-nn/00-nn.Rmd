@@ -1,8 +1,8 @@
 ---
 title: "Redes neuronales"
-subtitle: "Curso de aprendizaje automático para el INE"
-author: "Alberto Torres Barrán y Roi Naveiro"
-date: "`r Sys.Date()`"
+subtitle: "Programa ejecutivo de Inteligencia Artificial"
+author: "Alberto Torres Barrán<br/>alberto.torres@icmat.es"
+date: "Año de realización: 2019-2020"
 output:
   xaringan::moon_reader:
     css: ["default", "custom.css"]
