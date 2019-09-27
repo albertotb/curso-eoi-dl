@@ -3,6 +3,10 @@
   text-shadow: none;
 }
 
+.large { font-size: 130% }
+.small { font-size: 70% }
+.tiny { font-size: 40% }
+
 .title-slide {
   background-image: url('./img/imagen1.png');
   background-size: 500px;

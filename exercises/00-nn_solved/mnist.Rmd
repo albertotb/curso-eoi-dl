@@ -190,7 +190,7 @@ Definir la entropía cruzada como función de coste y rmsprop como optimizador.
 
 ```{r}
 model %>% compile(
-  loss = "categorical_crossentropy",
+  loss = loss_categorical_crossentropy,
   optimizer = optimizer_rmsprop(),
   metrics = c("accuracy")
 )

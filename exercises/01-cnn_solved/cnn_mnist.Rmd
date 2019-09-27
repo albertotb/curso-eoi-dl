@@ -46,6 +46,12 @@ x_test <- mnist$test$x
 y_test <- mnist$test$y
 ```
 
+```{r}
+print(y_train[6])
+show_digit(x_train[6,,])
+```
+
+
 2. Convertir las imágenes, de tamaño 28x28, a un array de tamaño 28x28x1. (Pista: función `array_reshape` de keras)
 
 ```{r}
@@ -102,7 +108,8 @@ model <- keras_model_sequential() %>%
 
 # Compile model
 model %>% compile(
-  loss = loss_categorical_crossentropy,
+  #loss = loss_categorical_crossentropy,
+  loss = "categorical_crossentropy",
   optimizer = optimizer_adam(),
   metrics = c('accuracy')
 )
@@ -121,6 +128,30 @@ model %>% fit(
   epochs = epochs,
   validation_split = 0.2
 )
+```
+
+```{r}
+save_model_hdf5(model, filepath = "mnist_weights.hdf5")
+```
+
+```{r}
+model <- load_model_hdf5("mnist_weights.hdf5")
+```
+
+
+```{r}
+y_pred <- predict_classes(model, x_test)
+```
+
+```{r}
+idx_miss <- which(y_pred != mnist$test$y)
+```
+
+```{r}
+idx <- idx_miss[1]
+y_pred[idx]
+mnist$test$y[idx]
+show_digit(x_test[idx,,,1])
 ```
 
 

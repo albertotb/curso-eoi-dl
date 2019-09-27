@@ -57,8 +57,10 @@ class: middle, center, inverse
 
 * Añadimos una capa intermedia (capa oculta)
 
+* Probar aquí: [http://playground.tensorflow.org](http://playground.tensorflow.org)
+
 .center[
-![:scale 45%](./img/Colored_neural_network.svg)
+![:scale 40%](./img/Colored_neural_network.svg)
 
 [Fuente](https://en.wikipedia.org/wiki/Artificial_neural_network)
 ]
@@ -66,6 +68,8 @@ class: middle, center, inverse
 ---
 
 ## Teorema de aproximación universal
+
+* Varias versiones, una de las primeras es de Cybenko (1989)
 
 * Asumimos:
 
@@ -79,7 +83,7 @@ class: middle, center, inverse
   
 * Aproxima cualquier función continua con precisión arbitrarea
 
-* **Pero**:el número de neuronas necesario es exponencialmente grande
+* **Pero**: el número de neuronas necesario es exponencialmente grande
 
 ---
 
@@ -586,7 +590,7 @@ w^{t+1} = w^t - \eta_t \nabla_w \frac{1}{B} \sum_{i \in \mathcal{B}} f_i(w^t)
 
 ---
 
-## Eecto de la estocasticidad
+## Efecto de la estocasticidad
 
 ![:scale 100%](./img/sgd.png)
 
@@ -775,39 +779,3 @@ class: middle, center, inverse
 <center>
 ![:scale 90%](./img/dropout.png)
 </center>
-
----
-class: middle, center, inverse
-# Redes Neuronales Bayesianas
-
----
-
-## ¿Por qué BNNs?
-
-* **Cuantifican la incertidumbre** en los pesos.
-
-* **Cuantifican la incertidumbre** en la salida de la red.
-
-* Permiten la selección directa de **hiperparámetros**, sin necesidad de validación.
-
-* Previenen overfitting, y que la respuesta de la red es un "promedio" sobre muchas redes (cada una pesada con la distribución a posteriori).
-
-\begin{equation}
-p(t \vert \mathcal{D}, x) = \int p(t \vert w, x) p(w \vert \mathcal{D}) dw
-\end{equation}
-
----
-
-## ¿Por qué no BNNs?
-
-* La dependencia **altamente no lineal** de la salida con los pesos, hace que la inferencia Bayesiana exact sea inviable.
-
-* Métodos MCMC no escalan bien.
-
-* Alternativas:
-
-  1. Versiones sofisticadas de MCMC, por ejemplo <a href="https://www.ics.uci.edu/~welling/publications/papers/stoclangevin_v6.pdf">esto</a>. 
-  
-  2. Inferencia variacional: aproximar el posterior por una gaussiana multivariante (mean-field o full rank).
-
-* Campo activo de investigación!
