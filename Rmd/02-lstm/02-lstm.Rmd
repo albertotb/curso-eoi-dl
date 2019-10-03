@@ -24,18 +24,230 @@ class: middle, center, inverse
 
 ## Intuición
 
-* Las redes neuronales recurrentes (*recurrent neural networks*, RNNs) surgen de la necesidad de **procesar secuencias** de datos (fundamentalmente textos).
+* Las redes neuronales recurrentes (*recurrent neural networks*, RNNs) surgen de la necesidad de **procesar secuencias** de datos 
 
-* ¿Qué hacemos cuando los inputs pueden tener diferentes longitudes?
+.center[
+![:scale 70%](img/nn_vs_rnn.png)
+]
+.small[Raschka, Sebastian. STAT 479: Deep Learning, Spring 2019. [Introduction to Recurrent Neural Networks Part 1](https://github.com/rasbt/stat479-deep-learning-ss19)]
 
---
+---
 
-* **Idea** añadir conexiones a modo de feedback (<span style="color:green"> $\rightarrow$ </span>)
+## Red recurrente "extendida"
+
+.center[
+![:scale 70%](img/rnn_unfold.png)
+]
+
+.small[Raschka, Sebastian. STAT 479: Deep Learning, Spring 2019. [Introduction to Recurrent Neural Networks Part 1](https://github.com/rasbt/stat479-deep-learning-ss19)]
+
+---
+
+## Aplicaciones
+
+1. Predicción de series temporales
+
+2. Clasificación de texto
+
+3. Traducción automática
+
+4. Reconocimiento del habla
+
+5. ...
+---
+
+## Tipos de tareas con secuencias
+
+- *one to many* (ej. image captioning)
+
+- *many to one* (ej. sentiment analysis)
+
+- *many to many* (ej. machine translation)
+
+![:vspace 1]
+
+.center[
+![:scale 90%](./img/rnn1.png)
+]
+
+.small[Karpathy, Andrew (2015). [The Unreasonable Effectiveness of Recurrent Neural Networks](http://karpathy.github.io/2015/05/21/rnn-effectiveness/)]
+
+---
+
+class: middle, center, inverse
+
+# Aplicaciones RNNs
+
+---
+
+## Generación de textos
+
+* https://openai.com/blog/better-language-models/
+
+* GPT-2 es un modelo de lenguaje entrenado sobre un corpus de 40GB de datos (8 millones de páginas webs).
+
+* La versión grande del modelo consta de 1500 millones de parámetros.
+
+* Generación de historias online en https://talktotransformer.com/
+
+
+---
+
+## Traducción automática
+
+* Modelos **seq2seq**: composición de many-to-one + one-to-many.
+
+* $x_1, \ldots, x_T$ es la frase en el idioma original.
+
+* $y_1, \ldots, y_{T'}$ es la frase en el idioma de destino.
 
 <center>
-![:scale 90%](./img/rnn1.png)
+![:scale 80%](./img/seq2seq.png)
 </center>
 
+* Sequence to Sequence Learning with Neural Networks: https://arxiv.org/abs/1409.3215
+
+* Actualmente usado en **Google Traslate**: https://ai.google/research/pubs/pub45610
+---
+
+## Subtitulación de imágenes
+
+<center>
+![:scale 80%](./img/caption.png)
+</center>
+
+* Explain Images with Multimodal Recurrent Neural Networks: https://arxiv.org/pdf/1410.1090.pdf
+
+* Show and Tell: A Neural Image Caption Generator: https://arxiv.org/pdf/1411.4555.pdf
+
+
+---
+
+## Procesamiento de lenguaje natural (NLP)
+
+* Pre 2000s: **simbólico, basado en reglas**
+
+  * Lenguaje entendido como conjunto de elementos y reglas para combinarlos.
+  * Gramáticas independientes de contexto (Chomsky).
+  * Más adecuado a lenguajes artificiales (de programación) que naturales (humanos).
+  
+<center>
+![:scale 30%](./img/nlp1.png)
+</center>
+  
+* Después: **estadístico, basado en datos**
+
+  * Lenguaje entendido como probabilidades de secuencias de palabras.
+  * Cálculo de frecuencias de palabras, n-gramas, etc.
+  * Más adecuado a lenguajes naturales que artificiales.
+  * Combinación con modelos profundos: **estado del arte**.
+
+---
+
+## Ejemplo de "bag of words"
+
+.large[1) Entrenar clasificador con un dataset que tiene 3 sentencias: ]
+
+![](img/sentences.png)
+
+![:vspace 20]
+
+.small[Raschka, Sebastian. STAT 479: Deep Learning, Spring 2019. [Introduction to Recurrent Neural Networks Part 1](https://github.com/rasbt/stat479-deep-learning-ss19)]
+
+---
+
+class: middle
+
+.large[2) Construir vocabulario usando todas las palabras únicas]
+
+.center[
+![](img/vocabulary.png)
+]
+
+---
+
+class: middle
+
+
+.large[3) Transformar cada sentencia inicial en su representación vectorial]
+
+![:vspace 5]
+
+![](img/transform.png)
+
+
+---
+
+class: middle
+
+.large[4) Usando esa representación entrenamos cualquier clasificador (regresión logística, SVM, red neuronal, etc.)]
+
+.center[
+![](img/classifier.png)
+]
+
+![:vspace 2]
+
+* Las filas de **X** representan ejemplos/muestras
+
+* Las columnas de **X** son características/variables
+
+  1. binarias 0/1, la palabra está presente o no en la frase
+  
+  2. frecuencias, contar cuantas veces aparece la palabra en la frase
+  
+  3. TF-IDF (*term frequency - inverse document frequency*), frecuencias normalizadas usando el total de todas las frases
+
+---
+
+## Preprocesamiento opcional
+
+.large[1) Eliminar palabras "vacias" (*stop words*)]
+
+![](img/stopword.png)
+
+---
+
+class: middle
+
+.large[2) Crear n-gramas (n > 1)]
+
+.center[
+![:scale 50%](img/ngram.png)
+]
+
+Problemas:
+
+  1. Tamaño vocabulario
+  
+  2. *Sparsity*
+
+
+---
+
+## Problemas bag of words
+
+Desventajas aproximación clásica:
+
+1. Numero de variables determinado por el tamaño del vocabulario, potencialmente muy grande
+
+2. Ejemplos muy *sparse* (la mayoría del vector contiene 0s)
+
+3. **No tienen en cuenta el contexto**, se ignora el orden de las palabras
+
+![:vspace 3]
+
+Los n-gramas 
+
+* solucionan parcialmente el problema 3), ya que se tienen en cuenta n-tuplas de palabras
+
+* empeoran 1), ya que el tamaño del vocabulario aumenta combinatoriamente
+
+---
+
+class: middle, center, inverse
+
+# Redes neuronales recurrentes
 
 ---
 
@@ -63,6 +275,16 @@ y_t &= W_{hy} h_t
   * reducción en el número de parámetros.
 
 * Podemos desarrollar la recurrencia a lo largo de $t$ (ver siguientes):
+
+---
+
+class: center, middle
+
+![:scale 95%](img/rnn_unfold.png)
+
+---
+
+![](img/rnn_unfold_highlighted.png)
 
 ---
 
@@ -150,6 +372,15 @@ y_t &= W_{hy} h_t
       * Solución: nueva arquitecturas (LSTM, GRU).
 
 
+---
+
+## Soluciones al problema de los gradientes
+
+1. Acotar el valor máximo del gradiente: solo resuelve el problema de la "explosión" del gradiente
+
+2. Limitar el número de pasos hacia atrás que se usan a la hora de hacer la propagación (*Truncated backpropagation through time*, TBPTT)
+
+3. *Long short-term memory* (LSTM), usa una celda de memoria para modelar dependencias muy separadas en el tiempo y evitar el problema de la "explosión" de gradientes
 
 
 ---
@@ -166,6 +397,11 @@ y_t &= W_{hy} h_t
 ![:scale 30%](./img/lstm1.png)
 </center>
 
+---
+
+class: middle, center
+
+![](img/lstm_context.png)
 
 ---
 
@@ -236,9 +472,6 @@ h_t &= o_t * \tanh (C_t)
 </center>
 
 
-
-
-
 ---
 
 ## Resumen
@@ -257,35 +490,11 @@ h_t &= o_t * \tanh (C_t)
 
 * Las **gated recurrent units** (GRU) son algo más sencillas aunque siguen el mismo mecanismo de compuertas (https://www.aclweb.org/anthology/D14-1179)
 
-
-
 ---
-
 
 class: middle, center, inverse
 
-# Aplicación de RNNs a Procesamiento de Lenguaje Natural
-
----
-
-## Cambio de paradigma
-
-* Pre 2000s: **simbólico, basado en reglas**
-
-  * Lenguaje entendido como conjunto de elementos y reglas para combinarlos.
-  * Gramáticas independientes de contexto (Chomsky).
-  * Más adecuado a lenguajes artificiales (de programación) que naturales (humanos).
-  
-<center>
-![:scale 30%](./img/nlp1.png)
-</center>
-  
-* Después: **estadístico, basado en datos**
-
-  * Lenguaje entendido como probabilidades de secuencias de palabras.
-  * Cálculo de frecuencias de palabras, n-gramas, etc.
-  * Más adecuado a lenguajes naturales que artificiales.
-  * Combinación con modelos profundos: **estado del arte**.
+# Ejemplo aplicación: procesamiento de texto
 
 ---
 
@@ -392,49 +601,4 @@ $$
 * https://fasttext.cc/ mejora de word2vec (contiene información de prefijos y sufijos).
 
 * https://fasttext.cc/docs/en/crawl-vectors.html en castellano, entrenados sobre los artículos de la Wikipedia y CommonCrawl.
-
-
-
----
-
-## Generación de textos
-
-* https://openai.com/blog/better-language-models/
-
-* GPT-2 es un modelo de lenguaje entrenado sobre un corpus de 40GB de datos (8 millones de páginas webs).
-
-* La versión grande del modelo consta de 1500 millones de parámetros.
-
-* Generación de historias online en https://talktotransformer.com/
-
-
----
-
-## Traducción automática
-
-* Modelos **seq2seq**: composición de many-to-one + one-to-many.
-
-* $x_1, \ldots, x_T$ es la frase en el idioma original.
-
-* $y_1, \ldots, y_{T'}$ es la frase en el idioma de destino.
-
-<center>
-![:scale 80%](./img/seq2seq.png)
-</center>
-
-* Sequence to Sequence Learning with Neural Networks: https://arxiv.org/abs/1409.3215
-
-* Actualmente usado en **Google Traslate**: https://ai.google/research/pubs/pub45610
----
-
-## Subtitulación de imágenes
-
-<center>
-![:scale 80%](./img/caption.png)
-</center>
-
-* Explain Images with Multimodal Recurrent Neural Networks: https://arxiv.org/pdf/1410.1090.pdf
-
-* Show and Tell: A Neural Image Caption Generator: https://arxiv.org/pdf/1411.4555.pdf
-
 
