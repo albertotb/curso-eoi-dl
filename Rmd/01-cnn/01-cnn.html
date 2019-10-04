@@ -301,7 +301,7 @@ Convolutional Neural Networks Part 1]
 
 ---
 
-## Motivación
+## Características RNN
 
 1. conexiones dispersas
 
@@ -311,9 +311,9 @@ Convolutional Neural Networks Part 1]
 
 2. compartición de pesos
 
-  * invariante frente a traslaciones
+  * un kernel que funciona bien en una región puede que funcione también en otra
 
-  * reduce la cantidad de memoria necesaria
+  * reduce la cantidad de parámetros
 
 ---
 
@@ -324,6 +324,75 @@ Convolutional Neural Networks Part 1]
 * Imagen de la derecha: restar a cada píxel su vecino por la izquierda
 
 * Esta operación se puede representar de forma muy eficiente con una convolución
+
+---
+
+## Compartición de pesos
+
+El kernel se desplaza por la imágen generando un *feature map*
+
+.center[
+![](img/kernel1.png)
+]
+
+.small[Raschka, Sebastian. STAT 479: Deep Learning, Spring 2019. Introduction to 
+Convolutional Neural Networks Part 1]
+
+---
+
+class: center, middle
+
+![](img/kernel2.png)
+
+---
+
+class: center, middle
+
+![](img/kernel3.png)
+
+---
+
+class: center, middle
+
+.large[Varios kernels se usan para obtener múltiples *feature maps*]
+
+![:vspace 2]
+
+![](img/kernel4.png)
+
+---
+
+## Arquitectura ejemplo: LeNet5
+
+Cada conjunto de *feature maps* representa una capa oculta
+
+![](img/lenet5.png)
+
+.small[Yann LeCun, Léon Bottou, Yoshua Bengio and Patrick Haffner: Gradient Based Learning Applied to Document Recognition, Proceedings of IEEE, 86(11):2278–2324, 1998]
+
+---
+
+## Convolución con distintos canales
+
+![](img/cnn_color_channels.png)
+
+---
+
+## Número de parámetros
+
+![](img/cnn_num_parameters.png)
+
+---
+
+## Parámetros del kernel
+
+1. Tamaño del kernel (alto x ancho, suelen ser iguales)
+
+2. *Stride* o paso
+
+3. *Padding*
+
+  - cuando no se aplica *padding* se habla de *"valid" convolution*
 
 ---
 
@@ -364,7 +433,7 @@ Convolutional Neural Networks Part 1]
 
 * En ocasiones se añade un *padding* de 0 al borde de la imágen:
 
-  1. preservar el tamaño de la entrada
+  1. preservar el tamaño de la entrada (*"same" convolution*)
   
   2. cuando es necesario por la combinación de tamaño de entrada, tamaño de kernel y stride
   
