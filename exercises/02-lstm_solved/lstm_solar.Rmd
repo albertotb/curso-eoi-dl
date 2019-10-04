@@ -120,7 +120,7 @@ model %>% compile(
 ```{r warning=FALSE}
 history <- model %>% fit(
   X_train, y_train, 
-  epochs = 30, batch_size = 128, 
+  epochs = 10, batch_size = 128, 
   validation_data = list(X_val, y_val),
   verbose = 1
 )
