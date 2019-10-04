@@ -343,7 +343,7 @@ class: center, middle
 
 ---
 
-## Problema de la RNN original (1)
+## Backpropagation
 
 * La backpropagación desde `\(h_t\)` a `\(h_{t-1}\)` necesita multiplicar por `\(W\)`.
 
@@ -357,23 +357,22 @@ class: center, middle
 ![:scale 80%](./img/gf2.png)
 &lt;/center&gt;
 
-* Calcular el gradiente para `\(h_0\)` implica multiplicaciones de `\(W\)`.
+* Calcular el gradiente para `\(h_0\)` implica multiplicaciones por `\(W\)`.
 
 
 ---
 
 
-## Problema de la RNN original (2)
+## Problema con los gradientes
 
-* Calcular el gradiente para `\(h_0\)` implica multiplicaciones de `\(W\)`:
 
-  * El mayor valor singular (autovalor) de `\(W\)` es `\(&gt; 1\)`: explosión del gradiente.
+  1. El mayor valor singular (autovalor) de `\(W\)` es `\(&gt; 1\)`: explosión del gradiente.
     
       * Solución: acotar manualmente el gradiente (**gradient clipping**).
       
-  * El mayor valor singular (autovalor) de `\(W\)` es `\(&lt; 1\)`: desvanecimiento del gradiente.
+  2. El mayor valor singular (autovalor) de `\(W\)` es `\(&lt; 1\)`: desvanecimiento del gradiente.
   
-      * Solución: nueva arquitecturas (LSTM, GRU).
+      * Solución: nuevas arquitecturas (LSTM, GRU).
 
 
 ---
@@ -614,6 +613,31 @@ $$
 * https://fasttext.cc/ mejora de word2vec (contiene información de prefijos y sufijos).
 
 * https://fasttext.cc/docs/en/crawl-vectors.html en castellano, entrenados sobre los artículos de la Wikipedia y CommonCrawl.
+
+
+---
+
+## Preprocesamiento para RNN a nivel de caracteres
+
+![:vspace 2]
+
+![](img/rnn_char1.png)
+
+---
+
+class: center, middle
+
+.large[Definir diccionarios para mapear caracteres a enteros]
+
+![](img/rnn_char2.png)
+
+---
+
+class: center, middle
+
+.large[La salida y se crea desplazando x una posición, ya que queremos predecir el siguiente carácter]
+
+![:scale 60%](img/rnn_char3.png)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
