@@ -18,7 +18,7 @@ output:
 
 class: middle, center, inverse
 
-# Redes recurrentes (RNNs)
+# Introducción
 
 ---
 
@@ -405,11 +405,13 @@ class: middle, center
 
 ---
 
-## LSTM (2)
+## Forget gate
 
-* Compuerta de **olvido** (forget).
+* Compuerta de **olvido** (forget)
 
-* Decide qué partes olvidar del estado anterior.
+* Decide qué partes olvidar del estado anterior
+
+* Cerca de 0, olvidar, cerca de 1, almacenar
 
 <center>
 ![:scale 50%](./img/lstm2.png)
@@ -422,11 +424,13 @@ f_t = \sigma (W_f \left[ h_{t-1}, x_t \right] + b_f)
 
 ---
 
-## LSTM (3)
+## Input gate
 
-* Compuerta de **actualización** (update).
+* Compuerta de **entrada** (input)
 
-* Decide qué modificar para el nuevo estado.
+* Decide qué modificar para el nuevo estado, $$C_t = C_{t-1} + i_t * \tilde{C}_t$$
+
+* Si $i_t$ es 0, el estado no se actualiza
 
 <center>
 ![:scale 50%](./img/lstm3.png)
@@ -440,9 +444,11 @@ i_t &= \sigma (W_i \left[ h_{t-1}, x_t \right] + b_i) \\
 
 ---
 
-## LSTM (4)
+## Output gate
 
 * Compuerta de **salida** (output)
+
+* Determina cual va a ser el siguiente estado oculto (*hidden state*)
 
 <center>
 ![:scale 50%](./img/lstm4.png)
@@ -476,19 +482,22 @@ h_t &= o_t * \tanh (C_t)
 
 ## Resumen
 
-* Las RNNs permiten gran flexibilidad en el diseño de la arquitectura.
+* Útiles para el procesamiento de datos secuenciales
 
-* Las RNNs originales son simples pero no funcionan bien.
+* La RNN original es simple pero no funciona demasiado bien
 
-* Más común: utilizar **LSTM**  para "mejorar" el gradiente.
+* Arquitecturas modernas incluyen celdas LSTM
 
-* El flujo de gradiente hacia atrás puede explotar o desvanecerse en las RNNs: la **explosión** se controla acotando el gradiente (clipping). El **desvanecimiento** mediante conexiones aditivas (LSTM).
+* El gradiente de las RNNs puede,
 
-* Las búsqueda de arquitecturas más simples es área de investigación actual.
+  1. **explotar**, se controla acotándolo (clipping)
+  2. **desvanecerse**, se arregla usando conexiones aditivas (LSTM)
 
-* Todavía hay escasos avances teóricos, se necesita más investigación.
+* Existen nuevas arquitecturas, por ejemplo las **gated recurrent units** ([GRU](https://www.aclweb.org/anthology/D14-1179)) 
 
-* Las **gated recurrent units** (GRU) son algo más sencillas aunque siguen el mismo mecanismo de compuertas (https://www.aclweb.org/anthology/D14-1179)
+  * algo más sencillas
+  
+  * usan el mismo mecanismo de compuertas
 
 ---
 
@@ -591,11 +600,11 @@ $$
 
 ## Uso de embeddings preentrenados
 
-* Aunque los embeddings pueden inicializarse aleatoriamente (como los pesos de una red neuronal estándar) y aprenderse durante la tarea,
+* Los embeddings pueden inicializarse aleatoriamente (como los pesos de una red neuronal estándar) y aprenderse durante la tarea
 
-* Una técnica habitual es cargar unos **word embeddings preentrenados**, para ahorrar tiempo y datos.
+* Es más habitual cargar unos **word embeddings preentrenados**, para ahorrar tiempo y datos
 
-* Una vez ya tenemos los embeddings, se los acoplamos a cualquier modelo (regresión logística, red neuronal) y procedemos con el entrenamiento.
+* Una vez ya tenemos los embeddings, se los acoplamos a cualquier modelo (regresión logística, red neuronal) y procedemos con el entrenamiento
 
 
 * https://fasttext.cc/ mejora de word2vec (contiene información de prefijos y sufijos).
