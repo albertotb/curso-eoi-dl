@@ -513,20 +513,6 @@ Entrada $6 \times 6$
 
 ---
 
-## Arquitectura típica
-
-* Parámetros: número de *feature maps*, tamaño del kernel, stride
-
-* Subsampling: max pooling
-
-* Antes de las capas *fully connected*, hay que aplanar (*flatten*) la salida
-
-![:vspace 5]
-
-![](./img/Typical_cnn.png)
-
----
-
 ## Visualizando activaciones
 
 .center[
@@ -551,7 +537,40 @@ Entrada $6 \times 6$
 
 ## CAM (class activation map)
 
-![](img/CAM.png)
+.center[
+![:scale 80%](img/CAM.png)
+]
+.small[Zhou, B., Khosla, A., Lapedriza, A., Oliva, A., & Torralba, A. (2016). Learning deep features for discriminative localization. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 2921-2929).]
+
+---
+
+class: inverse, center, middle
+
+# Arquitecturas
+
+---
+
+## Arquitectura típica
+
+* Parámetros: número de *feature maps*, tamaño del kernel, stride
+
+* Subsampling: max pooling
+
+* Antes de las capas *fully connected*, hay que aplanar (*flatten*) la salida
+
+![:vspace 5]
+
+![](./img/Typical_cnn.png)
+
+---
+
+## Arquitecturas comunes
+
+.center[
+![:scale 80%](img/common_arch.png)
+]
+
+.small[Canziani, A., Paszke, A., & Culurciello, E. (2016). An analysis of deep neural network models for practical applications. arXiv preprint arXiv:1605.07678.]
 
 ---
 
@@ -573,6 +592,67 @@ model <- keras_model_sequential() %>%
   ...
 ```
 
+---
+
+## Ejemplo arquitectura: VGG-16
+
+.center[
+![:scale 130%](img/vgg16.png)
+]
+
+.small[Simonyan, Karen, and Andrew Zisserman. "Very deep convolutional networks for large-scale image recognition." arXiv preprint arXiv:1409.1556 (2014)]
+
+---
+
+## ResNets
+
+
+* Se añaden conexiones entre capas usando la función identidad (*skip connection*), de forma que se pueden "saltar" capas que no son útiles
+
+* Este truco permite implementar arquitecturas muy profundas
+
+
+.center[
+![:scale 75%](img/resnet.png)
+]
+
+.small[He, Kaiming, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. "Deep residual learning for image recognition." In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 770-778. 2016]
+
+---
+
+## R vs Python
+
+```{r, eval=FALSE}
+model <- keras_model_sequential() %>%
+  layer_conv_2d(filters = 96, 
+                kernel_size = c(11, 11), 
+                activation = 'relu',
+                input_shape = c(224, 224, 3), 
+                strides = c(4, 4), 
+                padding = 'valid') %>% 
+  layer_max_pooling_2d(pool_size = c(2, 2), 
+                       strides = c(2, 2), 
+                       padding = 'valid') %>%
+  ...
+```
+
+```{python, eval=FALSE}
+model = Sequential()
+
+model.add(Conv2D(filters=96, 
+                 input_shape=(224,224,3), 
+                 kernel_size=(11,11), 
+                 strides=(4,4), 
+                 padding='valid'))
+
+model.add(Activation('relu'))
+
+model.add(MaxPooling2D(pool_size=(2,2), 
+                       strides=(2,2), 
+                       padding='valid'))
+...
+```
+
 
 ---
 
@@ -590,6 +670,5 @@ class: middle, center, inverse
 
 * https://medium.com/topic/machine-learning: artículos hacia audiencia general
 
-
-
+* https://github.com/rasbt/stat479-deep-learning-ss19: curso deep learning
 

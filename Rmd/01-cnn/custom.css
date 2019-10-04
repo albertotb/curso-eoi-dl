@@ -76,6 +76,10 @@ h2 {
   color: #7db61c;
 }
 
+.remark-code {
+  font-size: 15px;
+}
+
 code { /* changes inline code highlighting */
   background: #F5F5F5; /* lighter */
   /*background: #e7e8e2; /* darker */
